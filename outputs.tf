@@ -1,5 +1,5 @@
 output "ec2_machines" {
-  value = aws_instance.worker-nodes.*.arn    
+  value = aws_instance.worker-nodes.*.public_ip   
 }
 
 output "instance_ips" {
