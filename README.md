@@ -123,7 +123,9 @@ resource "aws_security_group" "sg_infra" {
 
 ```
 
-In the **instance.tf** file we will define the description of our instances :
+In the **master_instence.tf**  and **worker_instance** files we will define the description of our instances :
+
+**master_instance.tf** file :
 
 ```
 resource "aws_key_pair" "admin" {
@@ -136,16 +138,20 @@ resource "aws_instance" "master-nodes" {
   ami           = var.aws_ami
   instance_type = var.aws_instance_type
   key_name      = "admin"
-  count =  var.aws_master
-   subnet_id = "${aws_subnet.vmtest-a.id}"
+  
+  subnet_id = "${aws_subnet.vmtest-a.id}"
   security_groups = [
     "${aws_security_group.sg_infra.id}"
   ]
 
   tags = {
-        Name = "master-node-${count.index}"
+        Name = "master-node-0"
     }
 }
+```
+**worker_instance.tf** file :
+
+```
 resource "aws_instance" "worker-nodes" {
   ami           = var.aws_ami
   instance_type = var.aws_instance_type
@@ -163,20 +169,19 @@ resource "aws_instance" "worker-nodes" {
 }
 ```
 
-This file contains three blocks of code starting with the resource keyword. Let's detail the first block of code in this file :
+This **master_instance** file contains two blocks of code starting with the resource keyword. Let's detail the first block of code in this file :
 
 - **resource** : this keyword indicates that we will define a resource, which is the basic unit of Terraform. Here it is of type aws_key_pair, defining a key pair to use to connect to our EC2 instances.
 - **key_name** : the name of the key pair, which we will use to identify it in other resources.
 - **public_key**: the SSH public key, which will be deposited in your instances, allowing the connection via SSH.
 
-Let's now detail the second and third resources of the file which are identical.
-The second one defines the master instance and the third one the 3 workers instances.
+Let's now detail the second resource of the file which is identical in worker_instance file.
 
 - **resource** : contains a resource of type aws_instance named "master-nodes" or "worker-nodes".
 - **ami** : the ami indicated here is the official image of the Suse Linux Enterprise 15.2 distribution for the chosen region (it varies according to the region).
 - **instance_type** : the AWS instance type, which defines the performance of the virtual machine, here a very modest template.
 - **key_name** : the name of the key pair to SSH into the instance, defined by the previous resource.
-- **count** : The count meta-argument accepts a whole number, and creates that many instances of the resource or module.
+- **count** : The count meta-argument accepts a whole number, and creates that many instances of the resource or module. (only use in worker_instance)
 - **subnet_id** : the subnet of the instance defined in the **vpc.tf** file
 - **security_groups** : the security group defined in the **security.tf** file
 
@@ -186,9 +191,17 @@ In the file **variables.tf** we will define the default values for the instances
 - the number of instances worker
 - the number of master instances
 
-The terraform template installs a three worker nodes cluster with an instance of type : t2.large.
-These parameters can be changed in the file :  **ek-cluster.tf**
 
+In the file **outpu.tf** fwe will define the variables which are shared between the modules
+```
+output "worker_public_ip" {
+  value = aws_instance.worker-nodes.*.public_ip
+}
+
+output "master_public_ip" {
+  value = aws_instance.master-nodes.public_ip
+}
+```
 ## Usage
 
 Let's deploy our infrastructure :
