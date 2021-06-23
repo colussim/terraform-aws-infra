@@ -250,7 +250,7 @@ Apply complete! Resources: 11 added, 0 changed, 0 destroyed.
 terraform-aws-infra:>
 ```
 
-After about 4 minutes our instances are up running
+After a few minutes our instances are up running
 
 Tear down the whole Terraform plan with :
 
