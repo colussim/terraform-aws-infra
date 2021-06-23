@@ -12,7 +12,3 @@ variable "aws_worker" {
   default = 3 
 }
 
-variable "aws_master" {
-  default = 1 
-}
-
