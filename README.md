@@ -1,6 +1,6 @@
 ## Our first AWS infrastructure since Terraform
 
-The purpose of this tutorial is to create 4 identical Suse Linux Enterprise 15.2 virtual machines in AWS that we will deploy only with Terraform.
+The purpose of this tutorial is to create 4 identical OpenSuse LEAP 15.3 virtual machines in AWS that we will deploy only with Terraform.
 With the goal of using this infrastrucutre to deploy a kubernetes cluster .
 
 ## Architecture
