@@ -1,6 +1,6 @@
 variable "aws_ami" {
-  description = "defaut OpenSUSE 15.2"
-  default     = "ami-0fde50fcbcd46f2f7"
+  description = "defautOpenSUSE LEAP 15.3"
+  default     = "ami-0c8fcb221ea2d85f6"
 }
 
 variable "aws_instance_type" {
