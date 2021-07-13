@@ -1,6 +1,6 @@
 ## Our first AWS infrastructure since Terraform
 
-The purpose of this tutorial is to create 4 identical OpenSuse LEAP 15.3 virtual machines in AWS that we will deploy only with Terraform.
+The purpose of this tutorial is to create 4 identical OpenSuse Tumbleweed virtual machines in AWS that we will deploy only with Terraform.
 With the goal of using this infrastrucutre to deploy a kubernetes cluster .
 
 ## Architecture
@@ -116,8 +116,8 @@ ingress {
       cidr_blocks = ["0.0.0.0/0"]
     }
  ingress {
-   from_port = -1
-   to_port = -1
+   from_port = 0
+   to_port = 0
    protocol = "icmp"
    cidr_blocks = ["0.0.0.0/0"]
  }
