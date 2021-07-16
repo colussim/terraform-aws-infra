@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-innodb-cluster-0
+  namespace: mysql-cluster01
+spec:
+  ports:
+  - port: 3306
+  selector:
+    statefulset.kubernetes.io/pod-name: mysql-innodb-cluster-0
+  clusterIP: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-innodb-cluster-1
+  namespace: mysql-cluster01
+spec:
+  ports:
+  - port: 3306
+  selector:
+    statefulset.kubernetes.io/pod-name: mysql-innodb-cluster-1
+  clusterIP: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-innodb-cluster-2
+  namespace: mysql-cluster01
+spec:
+  ports:
+  - port: 3306
+  selector:
+    statefulset.kubernetes.io/pod-name: mysql-innodb-cluster-2
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-innodb-cluster
+  namespace: mysql-cluster01
+  labels:
+     environment: demo
+spec:
+  serviceName: "mysql-innodb-cluster"
+  replicas: 3
+  podManagementPolicy: Parallel
+  selector:
+    matchLabels:
+      app: mysql-innodb-cluster
+  template:
+    metadata:
+      labels:
+        app: mysql-innodb-cluster
+    spec:
+      containers:
+      - name: mysql
+        image: mysql/mysql-server:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: Bench123
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-persistent-storage
+    spec:
+      storageClassName: sc-cstor-csi-student1
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
