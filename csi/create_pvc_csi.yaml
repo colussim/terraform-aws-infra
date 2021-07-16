@@ -1,0 +1,35 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysqldata01-cstor-vol-student1
+spec:
+  storageClassName: sc-cstor-csi-student1
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysqldata02-cstor-vol-student1
+spec:
+  storageClassName: sc-cstor-csi-student1
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+--
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysqldata03-cstor-vol-student1
+spec:
+  storageClassName: sc-cstor-csi-student1
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
