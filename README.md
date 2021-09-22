@@ -291,5 +291,5 @@ It supports multiple providers such as AWS, Azure, Oracle, GCP, and many more.
 
 [Documentation, the AWS CLI](https://github.com/aws/aws-cli/tree/v2 "the AWS CLI")
 
-Next step , see details [here](https://techlabnews.com/2021/terraform-AWS-infra/ "Our first AWS infrastructure since Terraform")
+Next step , see details [here](https://techlabnews.com/terraform-AWS-infra/ "Our first AWS infrastructure since Terraform")
 
